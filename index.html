@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taxonomy Quiz</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  text-align: center;
+}
+.quiz-container {
+  background: white;
+  padding: 20px;
+  margin: 50px auto;
+  width: 60%;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+button {
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  background: gray;
+  color: white;
+  cursor: pointer;
+}
+button:hover {
+  background: black;
+}
+.progress-bar {
+  width: 100%;
+  background: #ddd;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+.progress {
+  height: 10px;
+  width: 0%;
+  background: #4caf50;
+  border-radius: 10px;
+}
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <div class="progress-bar"><div id="progress" class="progress"></div></div>
+  <h3 id="counter"></h3>
+  <h2 id="question">Question</h2>
+  <div id="answers"></div>
+  <h3 id="score"></h3>
+</div>
+
+<script>
+const quiz = [
+  {q:"What is a species?",a:["A type of cell","Group that can interbreed","Kingdom","Domain"],correct:1},
+  {q:"What is a genus?",a:["Closely related species","Random organisms","Cells","Domains"],correct:0},
+  {q:"What is a domain?",a:["Smallest rank","Cell type","Broadest rank","Organ"],correct:2},
+  {q:"Bacteria are...",a:["Multicellular","Plants","Single-celled without nucleus","Animals"],correct:2},
+  {q:"Archaea are...",a:["Plants","Single-celled in extreme environments","Animals","Fungi"],correct:1},
+  {q:"Eukarya includes...",a:["Only bacteria","Only plants","Organisms with nucleus","Only animals"],correct:2},
+  {q:"Protista are...",a:["Only animals","Bacteria","Single-celled eukaryotes","Fungi"],correct:2},
+  {q:"Fungi get nutrients by...",a:["Photosynthesis","Hunting","Breathing","Absorption"],correct:3},
+  {q:"Taxonomy is...",a:["Study of space","Study of weather","Classification of organisms","Math"],correct:2},
+  {q:"Scientific name is...",a:["Two-part name","One word","Three words","Code"],correct:0},
+  {q:"Kingdoms of life are...",a:["Major groups of organisms","Only animals","Only plants","Only bacteria"],correct:0},
+  {q:"Dichotomous keys are used to...",a:["Measure","Grow","Feed","Identify organisms"],correct:3},
+  {q:"A cladogram shows...",a:["Weather","Cells","Evolutionary relationships","Food"],correct:2},
+  {q:"Classification means...",a:["Destroy","Eat","Group organisms","Grow"],correct:2},
+  {q:"Linnaean system is...",a:["Hierarchy of classification","Random system","Flat system","None"],correct:0},
+  {q:"Binomial nomenclature is...",a:["Numbers","Two-part naming","One name","Colors"],correct:1},
+  {q:"Empirical evidence comes from...",a:["Dreams","Stories","Guesses","Observation/experiments"],correct:3},
+  {q:"Characteristics are...",a:["Traits of organisms","Ideas","Cells","DNA"],correct:0},
+  {q:"Evolutionary relationships are...",a:["Weather","Food","Energy","Shared ancestry"],correct:3},
+  {q:"Diversity is...",a:["One species","Only plants","Variety of organisms","Only animals"],correct:2},
+  {q:"Genus is made of...",a:["Cells","Domains","Species","Kingdoms"],correct:2},
+  {q:"Species is...",a:["Highest rank","Middle rank","Lowest rank","None"],correct:2},
+  {q:"Bacteria lack...",a:["DNA","Membrane","Life","Nucleus"],correct:3},
+  {q:"Archaea differ by...",a:["Color","Size","Genetics","Shape"],correct:2},
+  {q:"Eukarya have...",a:["No nucleus","Nothing","Nucleus","No DNA"],correct:2},
+  {q:"Protists are usually...",a:["Large","Plants","Small","Single-celled"],correct:3},
+  {q:"Fungi include...",a:["Animals","Plants","Bacteria","Mushrooms"],correct:3},
+  {q:"Scientific names use...",a:["Latin","English","Spanish","Code"],correct:0},
+  {q:"Taxonomy uses...",a:["Traits","Colors","Names","Sizes"],correct:0},
+  {q:"Cladograms use...",a:["Names","Sizes","Colors","Traits"],correct:3},
+  {q:"Keys give...",a:["Answers","Food","Choices","Names"],correct:2},
+  {q:"Classification helps...",a:["Confuse","Hide","Destroy","Organize"],correct:3},
+  {q:"Diversity increases with...",a:["Less life","One species","Variety","None"],correct:2},
+  {q:"Domain includes...",a:["3 groups","2 groups","5 groups","1 group"],correct:0},
+  {q:"Eukarya includes...",a:["Animals only","Plants only","Fungi only","All eukaryotes"],correct:3}
+];
+
+let current = 0;
+let score = 0;
+
+function loadQuestion() {
+  const q = quiz[current];
+
+  document.getElementById("question").innerText = q.q;
+  document.getElementById("counter").innerText = `Question ${current+1}/${quiz.length}`;
+
+  document.getElementById("progress").style.width = ((current/quiz.length)*100) + "%";
+
+  const answersDiv = document.getElementById("answers");
+  answersDiv.innerHTML = "";
+
+  q.a.forEach((answer, index) => {
+    const btn = document.createElement("button");
+    btn.innerText = answer;
+    btn.onclick = () => checkAnswer(index);
+    answersDiv.appendChild(btn);
+  });
+}
+
+function checkAnswer(index) {
+  if (index === quiz[current].correct) score++;
+
+  current++;
+
+  if (current < quiz.length) {
+    loadQuestion();
+  } else {
+    document.getElementById("progress").style.width = "100%";
+    document.getElementById("question").innerText = "Quiz Finished!";
+    document.getElementById("answers").innerHTML = "";
+    document.getElementById("counter").innerText = "";
+    document.getElementById("score").innerText = `Score: ${score}/${quiz.length}`;
+  }
+}
+
+loadQuestion();
+</script>
+
+</body>
+</html>
+
