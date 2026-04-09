@@ -4,12 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Taxonomy Quiz</title>
+
 <style>
 body {
   font-family: Arial, sans-serif;
   background: #f4f4f4;
   text-align: center;
 }
+
 .quiz-container {
   background: white;
   padding: 20px;
@@ -18,6 +20,7 @@ body {
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
+
 button {
   padding: 10px 20px;
   margin: 10px;
@@ -27,15 +30,18 @@ button {
   color: white;
   cursor: pointer;
 }
+
 button:hover {
   background: black;
 }
+
 .progress-bar {
   width: 100%;
   background: #ddd;
   border-radius: 10px;
   margin-bottom: 15px;
 }
+
 .progress {
   height: 10px;
   width: 0%;
@@ -44,6 +50,7 @@ button:hover {
 }
 </style>
 </head>
+
 <body>
 
 <div class="quiz-container">
@@ -55,42 +62,41 @@ button:hover {
 </div>
 
 <script>
+
 const quiz = [
-  {q:"What is a species?",a:["A type of cell","Group that can interbreed","Kingdom","Domain"],correct:1},
-  {q:"What is a genus?",a:["Closely related species","Random organisms","Cells","Domains"],correct:0},
-  {q:"What is a domain?",a:["Smallest rank","Cell type","Broadest rank","Organ"],correct:2},
-  {q:"Bacteria are...",a:["Multicellular","Plants","Single-celled without nucleus","Animals"],correct:2},
-  {q:"Archaea are...",a:["Plants","Single-celled in extreme environments","Animals","Fungi"],correct:1},
-  {q:"Eukarya includes...",a:["Only bacteria","Only plants","Organisms with nucleus","Only animals"],correct:2},
-  {q:"Protista are...",a:["Only animals","Bacteria","Single-celled eukaryotes","Fungi"],correct:2},
-  {q:"Fungi get nutrients by...",a:["Photosynthesis","Hunting","Breathing","Absorption"],correct:3},
-  {q:"Taxonomy is...",a:["Study of space","Study of weather","Classification of organisms","Math"],correct:2},
-  {q:"Scientific name is...",a:["Two-part name","One word","Three words","Code"],correct:0},
-  {q:"Kingdoms of life are...",a:["Major groups of organisms","Only animals","Only plants","Only bacteria"],correct:0},
-  {q:"Dichotomous keys are used to...",a:["Measure","Grow","Feed","Identify organisms"],correct:3},
-  {q:"A cladogram shows...",a:["Weather","Cells","Evolutionary relationships","Food"],correct:2},
-  {q:"Classification means...",a:["Destroy","Eat","Group organisms","Grow"],correct:2},
-  {q:"Linnaean system is...",a:["Hierarchy of classification","Random system","Flat system","None"],correct:0},
-  {q:"Binomial nomenclature is...",a:["Numbers","Two-part naming","One name","Colors"],correct:1},
-  {q:"Empirical evidence comes from...",a:["Dreams","Stories","Guesses","Observation/experiments"],correct:3},
-  {q:"Characteristics are...",a:["Traits of organisms","Ideas","Cells","DNA"],correct:0},
-  {q:"Evolutionary relationships are...",a:["Weather","Food","Energy","Shared ancestry"],correct:3},
-  {q:"Diversity is...",a:["One species","Only plants","Variety of organisms","Only animals"],correct:2},
-  {q:"Genus is made of...",a:["Cells","Domains","Species","Kingdoms"],correct:2},
-  {q:"Species is...",a:["Highest rank","Middle rank","Lowest rank","None"],correct:2},
-  {q:"Bacteria lack...",a:["DNA","Membrane","Life","Nucleus"],correct:3},
-  {q:"Archaea differ by...",a:["Color","Size","Genetics","Shape"],correct:2},
-  {q:"Eukarya have...",a:["No nucleus","Nothing","Nucleus","No DNA"],correct:2},
-  {q:"Protists are usually...",a:["Large","Plants","Small","Single-celled"],correct:3},
-  {q:"Fungi include...",a:["Animals","Plants","Bacteria","Mushrooms"],correct:3},
-  {q:"Scientific names use...",a:["Latin","English","Spanish","Code"],correct:0},
-  {q:"Taxonomy uses...",a:["Traits","Colors","Names","Sizes"],correct:0},
-  {q:"Cladograms use...",a:["Names","Sizes","Colors","Traits"],correct:3},
-  {q:"Keys give...",a:["Answers","Food","Choices","Names"],correct:2},
-  {q:"Classification helps...",a:["Confuse","Hide","Destroy","Organize"],correct:3},
-  {q:"Diversity increases with...",a:["Less life","One species","Variety","None"],correct:2},
-  {q:"Domain includes...",a:["3 groups","2 groups","5 groups","1 group"],correct:0},
-  {q:"Eukarya includes...",a:["Animals only","Plants only","Fungi only","All eukaryotes"],correct:3}
+  {q:"What is taxonomy?",a:["Study of space","Classification of living things","Study of rocks","Study of weather"],correct:1},
+
+  {q:"Who is known as the Father of Taxonomy?",a:["Newton","Darwin","Linnaeus","Einstein"],correct:2},
+
+  {q:"What is the correct order of classification?",a:[
+    "Species → Kingdom → Genus",
+    "Kingdom → Phylum → Class → Order → Family → Genus → Species",
+    "Genus → Family → Order",
+    "Class → Species → Kingdom"],correct:1},
+
+  {q:"Which kingdom includes organisms that make their own food?",a:["Animalia","Fungi","Plantae","Protista"],correct:2},
+
+  {q:"Which kingdom includes humans?",a:["Plantae","Fungi","Animalia","Protista"],correct:2},
+
+  {q:"Which kingdom includes mushrooms and molds?",a:["Animalia","Fungi","Protista","Bacteria"],correct:1},
+
+  {q:"Protists are usually...",a:["Multicellular","Single-celled","Plants only","Animals only"],correct:1},
+
+  {q:"Bacteria are...",a:["Multicellular","Have a nucleus","Single-celled without nucleus","Plants"],correct:2},
+
+  {q:"What is binomial nomenclature?",a:["One-word naming","Two-part scientific naming","Color naming","Number system"],correct:1},
+
+  {q:"What is a species?",a:["Random group","Largest group","Group that can reproduce","Cell type"],correct:2},
+
+  {q:"What level comes right before species?",a:["Kingdom","Genus","Family","Class"],correct:1},
+
+  {q:"Fungi get nutrients by...",a:["Photosynthesis","Absorption","Hunting","Breathing"],correct:1},
+
+  {q:"Which group has a nucleus?",a:["Bacteria","Eukarya","Archaea","Viruses"],correct:1},
+
+  {q:"What is the largest classification group?",a:["Species","Genus","Kingdom","Domain"],correct:3},
+
+  {q:"Why do scientists classify organisms?",a:["To confuse","To organize and understand life","To name randomly","To draw pictures"],correct:1}
 ];
 
 let current = 0;
@@ -127,13 +133,23 @@ function checkAnswer(index) {
     document.getElementById("question").innerText = "Quiz Finished!";
     document.getElementById("answers").innerHTML = "";
     document.getElementById("counter").innerText = "";
-    document.getElementById("score").innerText = `Score: ${score}/${quiz.length}`;
+
+    let message = "";
+    if (score === quiz.length) {
+      message = "Perfect! 🧠🔥";
+    } else if (score > quiz.length/2) {
+      message = "Great job! 👍";
+    } else {
+      message = "Keep studying! 📘";
+    }
+
+    document.getElementById("score").innerText = `Score: ${score}/${quiz.length} - ${message}`;
   }
 }
 
 loadQuestion();
+
 </script>
 
 </body>
 </html>
-
