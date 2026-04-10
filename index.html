@@ -3,34 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Classification Quiz</title>
+<title>Classification Quiz (45 Q)</title>
 <style>
-body {
-  font-family: Arial, sans-serif;
-  background: #f0f4f8;
-  text-align: center;
-}
-.quiz-container {
-  background: white;
-  padding: 20px;
-  margin: 40px auto;
-  width: 65%;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-button {
-  display: block;
-  width: 100%;
-  margin: 8px 0;
-  padding: 12px;
-  border-radius: 6px;
-  border: none;
-  background: #e7f1ff;
-  cursor: pointer;
-}
-button:hover { background:#cce0ff; }
-.progress-bar { background:#ddd; height:10px; border-radius:10px; margin-bottom:15px; }
-.progress { height:10px; width:0%; background:#4caf50; border-radius:10px; }
+body {font-family: Arial; background:#f0f4f8; text-align:center;}
+.quiz-container {background:white; padding:20px; margin:40px auto; width:65%; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1);}
+button {display:block; width:100%; margin:8px 0; padding:12px; border-radius:6px; border:none; background:#e7f1ff; cursor:pointer;}
+button:hover {background:#cce0ff;}
+.progress-bar {background:#ddd; height:10px; border-radius:10px; margin-bottom:15px;}
+.progress {height:10px; width:0%; background:#4caf50; border-radius:10px;}
 </style>
 </head>
 <body>
@@ -45,27 +25,26 @@ button:hover { background:#cce0ff; }
 
 <script>
 const quiz = [
-{q:"Who is known as the father of taxonomy?",a:["Charles Darwin","Carl Linnaeus","Newton","Pasteur"],correct:1},
-{q:"Binomial nomenclature uses...",a:["One name","Two-part names","Numbers","Codes"],correct:1},
-{q:"The first part of a scientific name is...",a:["Species","Genus","Domain","Kingdom"],correct:1},
-{q:"The second part is called...",a:["Genus","Species epithet","Domain","Family"],correct:1},
-{q:"Domain is...",a:["Smallest","Largest classification","Middle level","Not used"],correct:1},
-{q:"Order of classification from largest to smallest?",a:["Species→Domain","Domain→Species","Genus→Kingdom","Family→Order"],correct:1},
-{q:"Animals with backbones are...",a:["Invertebrates","Vertebrates","Protists","Fungi"],correct:1},
-{q:"Animals without backbones are...",a:["Vertebrates","Invertebrates","Mammals","Reptiles"],correct:1},
-{q:"Phylum groups are based on...",a:["Color","Body plan","Size","Habitat"],correct:1},
-{q:"Mammalia includes...",a:["Cold-blooded","Have fur & milk","Feathers","Scales"],correct:1},
-{q:"Reptilia are...",a:["Warm-blooded","Cold-blooded scaly","Feathers","Hair"],correct:1},
-{q:"Aves are...",a:["Fish","Birds","Mammals","Reptiles"],correct:1},
-{q:"Amphibians live...",a:["Only land","Only water","Both water & land","Air"],correct:2},
-{q:"Fungi get food by...",a:["Photosynthesis","Absorption","Hunting","Drinking"],correct:1},
-{q:"Plants make food by...",a:["Absorption","Photosynthesis","Eating","Hunting"],correct:1},
-{q:"Animalia are...",a:["Producers","Consumers","Bacteria","Plants"],correct:1},
-{q:"Bacteria are...",a:["Eukaryotes","Prokaryotes","Animals","Plants"],correct:1},
-{q:"Archaea live in...",a:["Normal places","Extreme environments","Only oceans","Only land"],correct:1},
-{q:"Eukaryotes have...",a:["No nucleus","A nucleus","No DNA","Nothing"],correct:1},
-{q:"Prokaryotes are...",a:["Multicellular","Single-celled no nucleus","Plants","Animals"],correct:1},
-{q:"Classification helps scientists...",a:["Confuse","Organize life","Destroy","Hide"],correct:1},
+{q:"Father of taxonomy?",a:["Darwin","Linnaeus","Newton","Einstein"],correct:1},
+{q:"Binomial nomenclature uses...",a:["1 name","2 names","3 names","Codes"],correct:1},
+{q:"First part of name?",a:["Species","Genus","Domain","Family"],correct:1},
+{q:"Second part?",a:["Genus","Species epithet","Domain","Order"],correct:1},
+{q:"Domain is...",a:["Smallest","Largest","Middle","None"],correct:1},
+{q:"Correct order?",a:["Species→Domain","Domain→Species","Genus→Kingdom","Family→Order"],correct:1},
+{q:"Animals with backbone?",a:["Invertebrates","Vertebrates","Protists","Fungi"],correct:1},
+{q:"No backbone?",a:["Vertebrates","Invertebrates","Mammals","Reptiles"],correct:1},
+{q:"Phylum based on...",a:["Color","Body plan","Size","Habitat"],correct:1},
+{q:"Mammalia traits?",a:["Cold","Fur + milk","Feathers","Scales"],correct:1},
+{q:"Reptilia traits?",a:["Warm","Cold + scales","Feathers","Hair"],correct:1},
+{q:"Aves are...",a:["Fish","Birds","Reptiles","Mammals"],correct:1},
+{q:"Amphibians live...",a:["Land","Water","Both","Air"],correct:2},
+{q:"Fungi eat by...",a:["Photosynthesis","Absorption","Hunting","None"],correct:1},
+{q:"Plants use...",a:["Absorption","Photosynthesis","Hunting","None"],correct:1},
+{q:"Animalia are...",a:["Producers","Consumers","Plants","Bacteria"],correct:1},
+{q:"Bacteria are...",a:["Eukaryotes","Prokaryotes","Plants","Animals"],correct:1},
+{q:"Archaea live...",a:["Normal","Extreme","Only water","Only land"],correct:1},
+{q:"Eukaryotes have...",a:["No nucleus","Nucleus","No DNA","None"],correct:1},
+{q:"Prokaryotes are...",a:["Multi","Single no nucleus","Plants","Animals"],correct:1},
 {q:"Taxonomy is...",a:["Math","Classification science","Space","Weather"],correct:1},
 {q:"Genus contains...",a:["Families","Species","Domains","Kingdoms"],correct:1},
 {q:"Family contains...",a:["Orders","Genera","Species","Domains"],correct:1},
@@ -73,13 +52,25 @@ const quiz = [
 {q:"Class contains...",a:["Phylum","Orders","Domains","Species"],correct:1},
 {q:"Phylum contains...",a:["Kingdom","Classes","Orders","Species"],correct:1},
 {q:"Kingdom contains...",a:["Domain","Phylum","Species","Genus"],correct:1},
-{q:"Three domains are...",a:["Animalia etc","Archaea, Bacteria, Eukarya","Plants only","Animals only"],correct:1},
-{q:"Protista are...",a:["Multicellular only","Mostly single-celled","Only plants","Only animals"],correct:1},
-{q:"Scientific names are written in...",a:["English","Latin","Spanish","Code"],correct:1},
-{q:"Genus is...",a:["Lower than species","Higher than species","Same","Not used"],correct:1},
+{q:"3 domains?",a:["Animals","Archaea Bacteria Eukarya","Plants","Fungi"],correct:1},
+{q:"Protista are...",a:["Multi only","Mostly single","Plants","Animals"],correct:1},
+{q:"Scientific names are...",a:["English","Latin","Spanish","Code"],correct:1},
+{q:"Genus is...",a:["Lower","Higher than species","Same","None"],correct:1},
 {q:"Species is...",a:["Most specific","Most general","Middle","None"],correct:0},
 {q:"Phylogeny is...",a:["Classification","Evolutionary history","Weather","Food"],correct:1},
-{q:"Diversity means...",a:["One type","Variety of life","Plants only","Animals only"],correct:1}
+{q:"Phylogenetic tree shows...",a:["Size","Evolution","Color","Habitat"],correct:1},
+{q:"Common ancestor means...",a:["Same color","Shared origin","Same size","Same place"],correct:1},
+{q:"Diversity means...",a:["One type","Variety","Plants only","Animals only"],correct:1},
+{q:"Classification helps...",a:["Confuse","Organize","Destroy","Hide"],correct:1},
+{q:"Prokaryotes include...",a:["Animals","Bacteria + Archaea","Plants","Fungi"],correct:1},
+{q:"Eukaryotes include...",a:["Animals","Plants","Fungi","All"],correct:3},
+{q:"Single-celled means...",a:["One cell","Many cells","No cells","Big"],correct:0},
+{q:"Multicellular means...",a:["One cell","Many cells","None","Small"],correct:1},
+{q:"Plants are...",a:["Consumers","Producers","Bacteria","Animals"],correct:1},
+{q:"Animals can...",a:["Photosynthesize","Move","Make sugar","None"],correct:1},
+{q:"Fungi examples...",a:["Fish","Mushrooms","Birds","Snakes"],correct:1},
+{q:"Invertebrates include...",a:["Humans","Insects","Fish","Birds"],correct:1},
+{q:"Vertebrates include...",a:["Worms","Fish","Sponges","Jellyfish"],correct:1}
 ];
 
 let current=0,score=0;
