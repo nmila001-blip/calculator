@@ -3,152 +3,120 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Taxonomy Quiz</title>
-
+<title>Classification Quiz</title>
 <style>
 body {
   font-family: Arial, sans-serif;
-  background: #f4f4f4;
+  background: #f0f4f8;
   text-align: center;
 }
-
 .quiz-container {
   background: white;
   padding: 20px;
-  margin: 50px auto;
-  width: 60%;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  margin: 40px auto;
+  width: 65%;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
-
 button {
-  padding: 10px 20px;
-  margin: 10px;
+  display: block;
+  width: 100%;
+  margin: 8px 0;
+  padding: 12px;
+  border-radius: 6px;
   border: none;
-  border-radius: 5px;
-  background: gray;
-  color: white;
+  background: #e7f1ff;
   cursor: pointer;
 }
-
-button:hover {
-  background: black;
-}
-
-.progress-bar {
-  width: 100%;
-  background: #ddd;
-  border-radius: 10px;
-  margin-bottom: 15px;
-}
-
-.progress {
-  height: 10px;
-  width: 0%;
-  background: #4caf50;
-  border-radius: 10px;
-}
+button:hover { background:#cce0ff; }
+.progress-bar { background:#ddd; height:10px; border-radius:10px; margin-bottom:15px; }
+.progress { height:10px; width:0%; background:#4caf50; border-radius:10px; }
 </style>
 </head>
-
 <body>
 
 <div class="quiz-container">
   <div class="progress-bar"><div id="progress" class="progress"></div></div>
   <h3 id="counter"></h3>
-  <h2 id="question">Question</h2>
+  <h2 id="question"></h2>
   <div id="answers"></div>
   <h3 id="score"></h3>
 </div>
 
 <script>
-
 const quiz = [
-  {q:"What is taxonomy?",a:["Study of space","Classification of living things","Study of rocks","Study of weather"],correct:1},
-
-  {q:"Who is known as the Father of Taxonomy?",a:["Newton","Darwin","Linnaeus","Einstein"],correct:2},
-
-  {q:"What is the correct order of classification?",a:[
-    "Species → Kingdom → Genus",
-    "Kingdom → Phylum → Class → Order → Family → Genus → Species",
-    "Genus → Family → Order",
-    "Class → Species → Kingdom"],correct:1},
-
-  {q:"Which kingdom includes organisms that make their own food?",a:["Animalia","Fungi","Plantae","Protista"],correct:2},
-
-  {q:"Which kingdom includes humans?",a:["Plantae","Fungi","Animalia","Protista"],correct:2},
-
-  {q:"Which kingdom includes mushrooms and molds?",a:["Animalia","Fungi","Protista","Bacteria"],correct:1},
-
-  {q:"Protists are usually...",a:["Multicellular","Single-celled","Plants only","Animals only"],correct:1},
-
-  {q:"Bacteria are...",a:["Multicellular","Have a nucleus","Single-celled without nucleus","Plants"],correct:2},
-
-  {q:"What is binomial nomenclature?",a:["One-word naming","Two-part scientific naming","Color naming","Number system"],correct:1},
-
-  {q:"What is a species?",a:["Random group","Largest group","Group that can reproduce","Cell type"],correct:2},
-
-  {q:"What level comes right before species?",a:["Kingdom","Genus","Family","Class"],correct:1},
-
-  {q:"Fungi get nutrients by...",a:["Photosynthesis","Absorption","Hunting","Breathing"],correct:1},
-
-  {q:"Which group has a nucleus?",a:["Bacteria","Eukarya","Archaea","Viruses"],correct:1},
-
-  {q:"What is the largest classification group?",a:["Species","Genus","Kingdom","Domain"],correct:3},
-
-  {q:"Why do scientists classify organisms?",a:["To confuse","To organize and understand life","To name randomly","To draw pictures"],correct:1}
+{q:"Who is known as the father of taxonomy?",a:["Charles Darwin","Carl Linnaeus","Newton","Pasteur"],correct:1},
+{q:"Binomial nomenclature uses...",a:["One name","Two-part names","Numbers","Codes"],correct:1},
+{q:"The first part of a scientific name is...",a:["Species","Genus","Domain","Kingdom"],correct:1},
+{q:"The second part is called...",a:["Genus","Species epithet","Domain","Family"],correct:1},
+{q:"Domain is...",a:["Smallest","Largest classification","Middle level","Not used"],correct:1},
+{q:"Order of classification from largest to smallest?",a:["Species→Domain","Domain→Species","Genus→Kingdom","Family→Order"],correct:1},
+{q:"Animals with backbones are...",a:["Invertebrates","Vertebrates","Protists","Fungi"],correct:1},
+{q:"Animals without backbones are...",a:["Vertebrates","Invertebrates","Mammals","Reptiles"],correct:1},
+{q:"Phylum groups are based on...",a:["Color","Body plan","Size","Habitat"],correct:1},
+{q:"Mammalia includes...",a:["Cold-blooded","Have fur & milk","Feathers","Scales"],correct:1},
+{q:"Reptilia are...",a:["Warm-blooded","Cold-blooded scaly","Feathers","Hair"],correct:1},
+{q:"Aves are...",a:["Fish","Birds","Mammals","Reptiles"],correct:1},
+{q:"Amphibians live...",a:["Only land","Only water","Both water & land","Air"],correct:2},
+{q:"Fungi get food by...",a:["Photosynthesis","Absorption","Hunting","Drinking"],correct:1},
+{q:"Plants make food by...",a:["Absorption","Photosynthesis","Eating","Hunting"],correct:1},
+{q:"Animalia are...",a:["Producers","Consumers","Bacteria","Plants"],correct:1},
+{q:"Bacteria are...",a:["Eukaryotes","Prokaryotes","Animals","Plants"],correct:1},
+{q:"Archaea live in...",a:["Normal places","Extreme environments","Only oceans","Only land"],correct:1},
+{q:"Eukaryotes have...",a:["No nucleus","A nucleus","No DNA","Nothing"],correct:1},
+{q:"Prokaryotes are...",a:["Multicellular","Single-celled no nucleus","Plants","Animals"],correct:1},
+{q:"Classification helps scientists...",a:["Confuse","Organize life","Destroy","Hide"],correct:1},
+{q:"Taxonomy is...",a:["Math","Classification science","Space","Weather"],correct:1},
+{q:"Genus contains...",a:["Families","Species","Domains","Kingdoms"],correct:1},
+{q:"Family contains...",a:["Orders","Genera","Species","Domains"],correct:1},
+{q:"Order contains...",a:["Classes","Families","Species","Domains"],correct:1},
+{q:"Class contains...",a:["Phylum","Orders","Domains","Species"],correct:1},
+{q:"Phylum contains...",a:["Kingdom","Classes","Orders","Species"],correct:1},
+{q:"Kingdom contains...",a:["Domain","Phylum","Species","Genus"],correct:1},
+{q:"Three domains are...",a:["Animalia etc","Archaea, Bacteria, Eukarya","Plants only","Animals only"],correct:1},
+{q:"Protista are...",a:["Multicellular only","Mostly single-celled","Only plants","Only animals"],correct:1},
+{q:"Scientific names are written in...",a:["English","Latin","Spanish","Code"],correct:1},
+{q:"Genus is...",a:["Lower than species","Higher than species","Same","Not used"],correct:1},
+{q:"Species is...",a:["Most specific","Most general","Middle","None"],correct:0},
+{q:"Phylogeny is...",a:["Classification","Evolutionary history","Weather","Food"],correct:1},
+{q:"Diversity means...",a:["One type","Variety of life","Plants only","Animals only"],correct:1}
 ];
 
-let current = 0;
-let score = 0;
+let current=0,score=0;
 
-function loadQuestion() {
-  const q = quiz[current];
+function loadQuestion(){
+  const q=quiz[current];
+  document.getElementById("question").innerText=q.q;
+  document.getElementById("counter").innerText=`Question ${current+1}/${quiz.length}`;
+  document.getElementById("progress").style.width=(current/quiz.length*100)+"%";
 
-  document.getElementById("question").innerText = q.q;
-  document.getElementById("counter").innerText = `Question ${current+1}/${quiz.length}`;
+  const answersDiv=document.getElementById("answers");
+  answersDiv.innerHTML="";
 
-  document.getElementById("progress").style.width = ((current/quiz.length)*100) + "%";
-
-  const answersDiv = document.getElementById("answers");
-  answersDiv.innerHTML = "";
-
-  q.a.forEach((answer, index) => {
-    const btn = document.createElement("button");
-    btn.innerText = answer;
-    btn.onclick = () => checkAnswer(index);
+  q.a.forEach((ans,i)=>{
+    const btn=document.createElement("button");
+    btn.innerText=ans;
+    btn.onclick=()=>checkAnswer(i);
     answersDiv.appendChild(btn);
   });
 }
 
-function checkAnswer(index) {
-  if (index === quiz[current].correct) score++;
-
+function checkAnswer(i){
+  if(i===quiz[current].correct) score++;
   current++;
 
-  if (current < quiz.length) {
+  if(current<quiz.length){
     loadQuestion();
   } else {
-    document.getElementById("progress").style.width = "100%";
-    document.getElementById("question").innerText = "Quiz Finished!";
-    document.getElementById("answers").innerHTML = "";
-    document.getElementById("counter").innerText = "";
-
-    let message = "";
-    if (score === quiz.length) {
-      message = "Perfect! 🧠🔥";
-    } else if (score > quiz.length/2) {
-      message = "Great job! 👍";
-    } else {
-      message = "Keep studying! 📘";
-    }
-
-    document.getElementById("score").innerText = `Score: ${score}/${quiz.length} - ${message}`;
+    document.getElementById("progress").style.width="100%";
+    document.getElementById("question").innerText="Finished!";
+    document.getElementById("answers").innerHTML="";
+    document.getElementById("counter").innerText="";
+    document.getElementById("score").innerText=`Score: ${score}/${quiz.length}`;
   }
 }
 
 loadQuestion();
-
 </script>
 
 </body>
