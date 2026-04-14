@@ -1,79 +1,93 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Breakout Game</title>
+  <title>Idle Breakout</title>
   <style>
-    canvas { background: #111; display: block; margin: auto; }
+    body { background:#0f172a; color:white; text-align:center; font-family:Arial; }
+    canvas { background:#111; display:block; margin:auto; }
+    button { margin:5px; padding:10px; }
   </style>
 </head>
 <body>
 
-<canvas id="game" width="480" height="320"></canvas>
+<h1>Idle Breakout</h1>
+<p>Score: <span id="score">0</span></p>
+
+<canvas id="game" width="500" height="300"></canvas>
+
+<br>
+<button onclick="buyBall()">Buy Auto Ball (50)</button>
+<button onclick="upgradeSpeed()">Upgrade Speed (100)</button>
 
 <script>
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
-let x = canvas.width/2;
-let y = canvas.height-30;
-let dx = 2;
-let dy = -2;
+let balls = [{x:250,y:150,dx:2,dy:-2}];
+let score = 0;
+let speedMultiplier = 1;
 
-let paddleHeight = 10;
-let paddleWidth = 75;
-let paddleX = (canvas.width-paddleWidth)/2;
-
-let rightPressed = false;
-let leftPressed = false;
-
-document.addEventListener("keydown", e => {
-  if(e.key === "Right") rightPressed = true;
-  if(e.key === "Left") leftPressed = true;
-});
-document.addEventListener("keyup", e => {
-  if(e.key === "Right") rightPressed = false;
-  if(e.key === "Left") leftPressed = false;
-});
-
-function drawBall() {
-  ctx.beginPath();
-  ctx.arc(x,y,10,0,Math.PI*2);
-  ctx.fillStyle = "white";
-  ctx.fill();
-  ctx.closePath();
-}
-
-function drawPaddle() {
-  ctx.beginPath();
-  ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
-  ctx.fillStyle = "white";
-  ctx.fill();
-  ctx.closePath();
-}
-
-function draw() {
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  drawBall();
-  drawPaddle();
-
-  if(x + dx > canvas.width-10 || x + dx < 10) dx = -dx;
-  if(y + dy < 10) dy = -dy;
-  else if(y + dy > canvas.height-10) {
-    if(x > paddleX && x < paddleX + paddleWidth) {
-      dy = -dy;
-    } else {
-      alert("Game Over");
-      document.location.reload();
-    }
+let bricks = [];
+for(let i=0;i<5;i++){
+  for(let j=0;j<8;j++){
+    bricks.push({x: j*60+20, y:i*30+20, hp:3});
   }
+}
 
-  if(rightPressed && paddleX < canvas.width-paddleWidth) paddleX += 5;
-  if(leftPressed && paddleX > 0) paddleX -= 5;
+function drawBricks(){
+  bricks.forEach(b=>{
+    if(b.hp>0){
+      ctx.fillStyle = ["#22c55e","#facc15","#ef4444"][b.hp-1];
+      ctx.fillRect(b.x,b.y,50,20);
+    }
+  });
+}
 
-  x += dx;
-  y += dy;
+function drawBalls(){
+  balls.forEach(ball=>{
+    ctx.beginPath();
+    ctx.arc(ball.x, ball.y, 6, 0, Math.PI*2);
+    ctx.fillStyle="#38bdf8";
+    ctx.fill();
 
+    ball.x += ball.dx * speedMultiplier;
+    ball.y += ball.dy * speedMultiplier;
+
+    if(ball.x<0||ball.x>canvas.width) ball.dx*=-1;
+    if(ball.y<0||ball.y>canvas.height) ball.dy*=-1;
+
+    bricks.forEach(b=>{
+      if(b.hp>0 &&
+         ball.x > b.x && ball.x < b.x+50 &&
+         ball.y > b.y && ball.y < b.y+20){
+        ball.dy *= -1;
+        b.hp--;
+        if(b.hp===0) score += 10;
+      }
+    });
+  });
+}
+
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  drawBricks();
+  drawBalls();
+  document.getElementById("score").innerText = score;
   requestAnimationFrame(draw);
+}
+
+function buyBall(){
+  if(score>=50){
+    score -= 50;
+    balls.push({x:250,y:150,dx:2,dy:-2});
+  }
+}
+
+function upgradeSpeed(){
+  if(score>=100){
+    score -= 100;
+    speedMultiplier += 0.5;
+  }
 }
 
 draw();
