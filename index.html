@@ -3,21 +3,36 @@
 <head>
   <title>Idle Breakout</title>
   <style>
-    body { background:#0f172a; color:white; text-align:center; font-family:Arial; }
-    canvas { background:#111; display:block; margin:auto; }
-    button { margin:5px; padding:10px; }
+    body {
+      background:#0f172a;
+      color:white;
+      text-align:center;
+      font-family:Arial;
+    }
+    canvas {
+      background:#111;
+      display:block;
+      margin:auto;
+    }
+    button {
+      margin:5px;
+      padding:10px;
+      cursor:pointer;
+    }
   </style>
 </head>
 <body>
 
-<h1>Idle Breakout</h1>
+<h1>Idle Breakout 🔥</h1>
 <p>Score: <span id="score">0</span></p>
+<p>Level: <span id="level">1</span></p>
 
 <canvas id="game" width="500" height="300"></canvas>
 
 <br>
-<button onclick="buyBall()">Buy Auto Ball (50)</button>
-<button onclick="upgradeSpeed()">Upgrade Speed (100)</button>
+<button onclick="buyBall()">+1 Ball (50)</button>
+<button onclick="buyBall10()">+10 Balls (400)</button>
+<button onclick="upgradeSpeed()">Speed (100)</button>
 
 <script>
 const canvas = document.getElementById("game");
@@ -25,19 +40,31 @@ const ctx = canvas.getContext("2d");
 
 let balls = [{x:250,y:150,dx:2,dy:-2}];
 let score = 0;
+let level = 1;
 let speedMultiplier = 1;
 
 let bricks = [];
-for(let i=0;i<5;i++){
-  for(let j=0;j<8;j++){
-    bricks.push({x: j*60+20, y:i*30+20, hp:3});
+
+function createBricks(){
+  bricks = [];
+  for(let i=0;i<5;i++){
+    for(let j=0;j<8;j++){
+      bricks.push({
+        x: j*60+20,
+        y: i*30+20,
+        hp: Math.min(level,5)
+      });
+    }
   }
 }
+
+createBricks();
 
 function drawBricks(){
   bricks.forEach(b=>{
     if(b.hp>0){
-      ctx.fillStyle = ["#22c55e","#facc15","#ef4444"][b.hp-1];
+      let colors = ["#22c55e","#facc15","#ef4444","#a855f7","#38bdf8"];
+      ctx.fillStyle = colors[b.hp-1];
       ctx.fillRect(b.x,b.y,50,20);
     }
   });
@@ -68,24 +95,46 @@ function drawBalls(){
   });
 }
 
+function checkLevel(){
+  if(bricks.every(b=>b.hp<=0)){
+    level++;
+    score += 100;
+    createBricks();
+  }
+}
+
 function draw(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
   drawBricks();
   drawBalls();
+  checkLevel();
+
   document.getElementById("score").innerText = score;
+  document.getElementById("level").innerText = level;
+
   requestAnimationFrame(draw);
 }
 
+// upgrades
 function buyBall(){
   if(score>=50){
-    score -= 50;
+    score-=50;
     balls.push({x:250,y:150,dx:2,dy:-2});
+  }
+}
+
+function buyBall10(){
+  if(score>=400){
+    score-=400;
+    for(let i=0;i<10;i++){
+      balls.push({x:250,y:150,dx:2,dy:-2});
+    }
   }
 }
 
 function upgradeSpeed(){
   if(score>=100){
-    score -= 100;
+    score-=100;
     speedMultiplier += 0.5;
   }
 }
