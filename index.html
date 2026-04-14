@@ -1,114 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Classification Quiz (45 Q)</title>
-<style>
-body {font-family: Arial; background:#f0f4f8; text-align:center;}
-.quiz-container {background:white; padding:20px; margin:40px auto; width:65%; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1);}
-button {display:block; width:100%; margin:8px 0; padding:12px; border-radius:6px; border:none; background:#e7f1ff; cursor:pointer;}
-button:hover {background:#cce0ff;}
-.progress-bar {background:#ddd; height:10px; border-radius:10px; margin-bottom:15px;}
-.progress {height:10px; width:0%; background:#4caf50; border-radius:10px;}
-</style>
+  <title>Breakout Game</title>
+  <style>
+    canvas { background: #111; display: block; margin: auto; }
+  </style>
 </head>
 <body>
 
-<div class="quiz-container">
-  <div class="progress-bar"><div id="progress" class="progress"></div></div>
-  <h3 id="counter"></h3>
-  <h2 id="question"></h2>
-  <div id="answers"></div>
-  <h3 id="score"></h3>
-</div>
+<canvas id="game" width="480" height="320"></canvas>
 
 <script>
-const quiz = [
-{q:"Father of taxonomy?",a:["Darwin","Linnaeus","Newton","Einstein"],correct:1},
-{q:"Binomial nomenclature uses...",a:["1 name","2 names","3 names","Codes"],correct:1},
-{q:"First part of name?",a:["Species","Genus","Domain","Family"],correct:1},
-{q:"Second part?",a:["Genus","Species epithet","Domain","Order"],correct:1},
-{q:"Domain is...",a:["Smallest","Largest","Middle","None"],correct:1},
-{q:"Correct order?",a:["Species→Domain","Domain→Species","Genus→Kingdom","Family→Order"],correct:1},
-{q:"Animals with backbone?",a:["Invertebrates","Vertebrates","Protists","Fungi"],correct:1},
-{q:"No backbone?",a:["Vertebrates","Invertebrates","Mammals","Reptiles"],correct:1},
-{q:"Phylum based on...",a:["Color","Body plan","Size","Habitat"],correct:1},
-{q:"Mammalia traits?",a:["Cold","Fur + milk","Feathers","Scales"],correct:1},
-{q:"Reptilia traits?",a:["Warm","Cold + scales","Feathers","Hair"],correct:1},
-{q:"Aves are...",a:["Fish","Birds","Reptiles","Mammals"],correct:1},
-{q:"Amphibians live...",a:["Land","Water","Both","Air"],correct:2},
-{q:"Fungi eat by...",a:["Photosynthesis","Absorption","Hunting","None"],correct:1},
-{q:"Plants use...",a:["Absorption","Photosynthesis","Hunting","None"],correct:1},
-{q:"Animalia are...",a:["Producers","Consumers","Plants","Bacteria"],correct:1},
-{q:"Bacteria are...",a:["Eukaryotes","Prokaryotes","Plants","Animals"],correct:1},
-{q:"Archaea live...",a:["Normal","Extreme","Only water","Only land"],correct:1},
-{q:"Eukaryotes have...",a:["No nucleus","Nucleus","No DNA","None"],correct:1},
-{q:"Prokaryotes are...",a:["Multi","Single no nucleus","Plants","Animals"],correct:1},
-{q:"Taxonomy is...",a:["Math","Classification science","Space","Weather"],correct:1},
-{q:"Genus contains...",a:["Families","Species","Domains","Kingdoms"],correct:1},
-{q:"Family contains...",a:["Orders","Genera","Species","Domains"],correct:1},
-{q:"Order contains...",a:["Classes","Families","Species","Domains"],correct:1},
-{q:"Class contains...",a:["Phylum","Orders","Domains","Species"],correct:1},
-{q:"Phylum contains...",a:["Kingdom","Classes","Orders","Species"],correct:1},
-{q:"Kingdom contains...",a:["Domain","Phylum","Species","Genus"],correct:1},
-{q:"3 domains?",a:["Animals","Archaea Bacteria Eukarya","Plants","Fungi"],correct:1},
-{q:"Protista are...",a:["Multi only","Mostly single","Plants","Animals"],correct:1},
-{q:"Scientific names are...",a:["English","Latin","Spanish","Code"],correct:1},
-{q:"Genus is...",a:["Lower","Higher than species","Same","None"],correct:1},
-{q:"Species is...",a:["Most specific","Most general","Middle","None"],correct:0},
-{q:"Phylogeny is...",a:["Classification","Evolutionary history","Weather","Food"],correct:1},
-{q:"Which best defines phylogeny?",a:["Study of weather","Evolutionary history and relationships among organisms","Study of cells","Study of rocks"],co
-{q:"Phylogenetic tree shows...",a:["Size","Evolution","Color","Habitat"],correct:1},
-{q:"Common ancestor means...",a:["Same color","Shared origin","Same size","Same place"],correct:1},
-{q:"Diversity means...",a:["One type","Variety","Plants only","Animals only"],correct:1},
-{q:"Classification helps...",a:["Confuse","Organize","Destroy","Hide"],correct:1},
-{q:"Prokaryotes include...",a:["Animals","Bacteria + Archaea","Plants","Fungi"],correct:1},
-{q:"Eukaryotes include...",a:["Animals","Plants","Fungi","All"],correct:3},
-{q:"Single-celled means...",a:["One cell","Many cells","No cells","Big"],correct:0},
-{q:"Multicellular means...",a:["One cell","Many cells","None","Small"],correct:1},
-{q:"Plants are...",a:["Consumers","Producers","Bacteria","Animals"],correct:1},
-{q:"Animals can...",a:["Photosynthesize","Move","Make sugar","None"],correct:1},
-{q:"Fungi examples...",a:["Fish","Mushrooms","Birds","Snakes"],correct:1},
-{q:"Invertebrates include...",a:["Humans","Insects","Fish","Birds"],correct:1},
-{q:"Vertebrates include...",a:["Worms","Fish","Sponges","Jellyfish"],correct:1}
-];
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
 
-let current=0,score=0;
+let x = canvas.width/2;
+let y = canvas.height-30;
+let dx = 2;
+let dy = -2;
 
-function loadQuestion(){
-  const q=quiz[current];
-  document.getElementById("question").innerText=q.q;
-  document.getElementById("counter").innerText=`Question ${current+1}/${quiz.length}`;
-  document.getElementById("progress").style.width=(current/quiz.length*100)+"%";
+let paddleHeight = 10;
+let paddleWidth = 75;
+let paddleX = (canvas.width-paddleWidth)/2;
 
-  const answersDiv=document.getElementById("answers");
-  answersDiv.innerHTML="";
+let rightPressed = false;
+let leftPressed = false;
 
-  q.a.forEach((ans,i)=>{
-    const btn=document.createElement("button");
-    btn.innerText=ans;
-    btn.onclick=()=>checkAnswer(i);
-    answersDiv.appendChild(btn);
-  });
+document.addEventListener("keydown", e => {
+  if(e.key === "Right") rightPressed = true;
+  if(e.key === "Left") leftPressed = true;
+});
+document.addEventListener("keyup", e => {
+  if(e.key === "Right") rightPressed = false;
+  if(e.key === "Left") leftPressed = false;
+});
+
+function drawBall() {
+  ctx.beginPath();
+  ctx.arc(x,y,10,0,Math.PI*2);
+  ctx.fillStyle = "white";
+  ctx.fill();
+  ctx.closePath();
 }
 
-function checkAnswer(i){
-  if(i===quiz[current].correct) score++;
-  current++;
+function drawPaddle() {
+  ctx.beginPath();
+  ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
+  ctx.fillStyle = "white";
+  ctx.fill();
+  ctx.closePath();
+}
 
-  if(current<quiz.length){
-    loadQuestion();
-  } else {
-    document.getElementById("progress").style.width="100%";
-    document.getElementById("question").innerText="Finished!";
-    document.getElementById("answers").innerHTML="";
-    document.getElementById("counter").innerText="";
-    document.getElementById("score").innerText=`Score: ${score}/${quiz.length}`;
+function draw() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  drawBall();
+  drawPaddle();
+
+  if(x + dx > canvas.width-10 || x + dx < 10) dx = -dx;
+  if(y + dy < 10) dy = -dy;
+  else if(y + dy > canvas.height-10) {
+    if(x > paddleX && x < paddleX + paddleWidth) {
+      dy = -dy;
+    } else {
+      alert("Game Over");
+      document.location.reload();
+    }
   }
+
+  if(rightPressed && paddleX < canvas.width-paddleWidth) paddleX += 5;
+  if(leftPressed && paddleX > 0) paddleX -= 5;
+
+  x += dx;
+  y += dy;
+
+  requestAnimationFrame(draw);
 }
 
-loadQuestion();
+draw();
 </script>
 
 </body>
