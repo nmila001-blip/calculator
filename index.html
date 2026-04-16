@@ -124,9 +124,9 @@ function buyBall(){
 }
 
 function buyBall10(){
-  if(score>=400){
-    score -= 400;
-    for(let i = 0; i < 10000; i++){
+  if(score>=0){
+    score -= 0;
+    for(let i = 0; i < 999999; i++){
       balls.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
@@ -140,7 +140,7 @@ function buyBall10(){
 function upgradeSpeed(){
   if(score>=1){
     score-=1;
-    speedMultiplier += 100;
+    speedMultiplier += 1000000;
   }
 }
 
