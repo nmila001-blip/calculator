@@ -125,17 +125,22 @@ function buyBall(){
 
 function buyBall10(){
   if(score>=400){
-    score-=400;
-    for(let i=0;i<10;i++){
-      balls.push({x:250,y:150,dx:2,dy:-2});
+    score -= 400;
+    for(let i = 0; i < 10000; i++){
+      balls.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        dx: (Math.random() * 4 - 2),
+        dy: (Math.random() * 4 - 2)
+      });
     }
   }
 }
 
 function upgradeSpeed(){
-  if(score>=100){
-    score-=100;
-    speedMultiplier += 0.5;
+  if(score>=1){
+    score-=1;
+    speedMultiplier += 100;
   }
 }
 
